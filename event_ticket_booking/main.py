@@ -38,6 +38,13 @@ def main():
     #     print(f"Error: {e}")
 
 
+    # try:
+    #     if user_service.login_user(email="leo@gmail.com", password= 'something'):
+    #         print("Logged in")
+    # except exceptions.UserNotFoundError as e:
+    #     print(f"Error: {e}")
+    # except exceptions.IncorrectPasswordError as e:
+    #     print(f"Error: {e}")
 
 
 

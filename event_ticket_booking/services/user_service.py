@@ -3,7 +3,9 @@ from event_ticket_booking.database.user_queries import UserQueries
 from event_ticket_booking.models.manager import Manager
 from event_ticket_booking.models.user import User
 
-from event_ticket_booking.utils.exceptions import UserAlreadyExistsError
+from event_ticket_booking.utils.exceptions import (UserAlreadyExistsError,
+                                                UserNotFoundError,
+                                                IncorrectPasswordError)
 
 
 class UserService:
@@ -28,3 +30,28 @@ class UserService:
         else:
             raise UserAlreadyExistsError
 
+
+    def login_user(self, email, password):
+        user = self.get_user_by_email(email=email)
+        if password == user[3]:
+            return True
+        else:
+            raise IncorrectPasswordError
+
+
+    def get_user_by_email(self, email):
+        user = self.user_queries.get_user(email=email)
+        if user:
+            return user
+        else:
+            raise UserNotFoundError
+        
+    def check_manager(self, email):
+        user = self.get_user_by_email(email=email)
+        if user[4]:
+            return True
+        
+    def check_user(self, email):
+        user = self.get_user_by_email(email=email)
+        if not user[4]:
+            return True
