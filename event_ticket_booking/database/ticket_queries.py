@@ -33,6 +33,13 @@ class TicketQueries:
 
             self.cursor.execute(update_query, (generated_ticket_id, id))
             self.connection.commit()
+
+            update_seat_query = """
+                UPDATE events SET total_seats = total_seats - 1 WHERE event_id = ?
+            """
+            self.cursor.execute(update_seat_query, (event_id,))
+            self.connection.commit()
+
             return generated_ticket_id
 
         except sqlite3.Error as e:
@@ -41,12 +48,22 @@ class TicketQueries:
 
     def remove_ticket(self, ticket_id):
         try:
+            event_id = self.get_ticket_by_id(ticket_id)[2]
+
             delete_query = """
                 DELETE FROM tickets WHERE ticket_id = ?;
             """
             self.cursor.execute(delete_query, (ticket_id,))
             self.connection.commit()
+
+            update_seat_query = """
+                UPDATE events SET total_seats = total_seats + 1 WHERE event_id = ?
+            """
+            self.cursor.execute(update_seat_query, (event_id,))
+            self.connection.commit()
+
             return True
+        
         except sqlite3.Error as e:
             print(f"Error: {e}")
 

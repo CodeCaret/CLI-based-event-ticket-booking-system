@@ -28,3 +28,4 @@ def main():
     # print(ticket.get_ticket_by_id('HYDCOL02USRJOH0401'))
     # print(ticket.get_all_ticket_by_event('HYDCOL02'))
     # print(ticket.get_all_ticket_by_user('MGRJOH03'))
+    # print(ticket.remove_ticket('HYDCOL02MGRJOH0303'))
