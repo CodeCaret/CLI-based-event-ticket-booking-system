@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS events (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
+    event_price REAL NOT NULL,
     location TEXT NOT NULL,
     date_time TEXT NOT NULL,
     total_seats INTEGER NOT NULL,
