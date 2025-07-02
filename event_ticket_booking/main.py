@@ -5,10 +5,6 @@ from event_ticket_booking.services.event_service import EventService
 
 from event_ticket_booking.utils import exceptions
 
-# from event_ticket_booking.database.user_queries import UserQueries
-# from event_ticket_booking.database.event_queries import EventQueries
-# from event_ticket_booking.database.ticket_queries import TicketQueries
-
 DB_FILE = 'booking.db'
 
 def database_connection():
@@ -17,15 +13,48 @@ def database_connection():
     user_service = UserService(db_file=DB_FILE)
     event_service = EventService(db_file=DB_FILE)
 
-    # user = UserQueries(db_file=DB_FILE)
-    # event = EventQueries(db_file=DB_FILE)
-    # ticket = TicketQueries(db_file=DB_FILE)
+def close_connection():
+    event_service.close()
+
+def main_menu():
+    print('\n')
+    print("1. Register Manager")
+    print("2. Register User")
+    print("3. Login")
+    print("4. Exit")
+    choice = input("Enter your choice: ")
+    return choice
 
 
 def main():
-    print("Welcom to Event Booking Hub")
+    print("Welcome to Event Booking Hub🥰")
     print("Establishing Connection With Database")
     database_connection()
+    
+    try:
+        while True:
+            choice = main_menu()
+
+            if choice == '1':
+                pass
+            elif choice == '2':
+                pass
+            elif choice == '3':
+                pass
+            elif choice == '4':
+                close_connection()
+                print("Closing Connection")
+                print("Thank you😏! Visit Again!!!")
+                break
+
+            else:
+                print("Invalid Choice")
+
+    except KeyboardInterrupt:
+        close_connection()
+        print("Closing Connection")
+        print("Thank you😏! Visit Again!!!")
+
 
     # try:
     #     manager_id = user_service.register_manager("Shahid", "shahid@gmail.com", "something")
