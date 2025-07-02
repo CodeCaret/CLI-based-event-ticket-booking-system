@@ -34,7 +34,7 @@ class UserService:
     def login_user(self, email, password):
         user = self.get_user_by_email(email=email)
         if password == user[3]:
-            return True
+            return user
         else:
             raise IncorrectPasswordError
 
@@ -48,10 +48,8 @@ class UserService:
         
     def check_manager(self, email):
         user = self.get_user_by_email(email=email)
-        if user[4]:
-            return True
+        return user[4]== 1
         
     def check_user(self, email):
         user = self.get_user_by_email(email=email)
-        if not user[4]:
-            return True
+        return user[4] == 0
