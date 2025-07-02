@@ -23,3 +23,12 @@ It provides CLI for:
 - Pip
 
 ---
+
+## Getting Started
+
+Clone the repo
+```
+//cmd
+git clone https://github.com/CodeCaret/CLI-based-event-ticket-booking-system.git
+cd CLI-based-event-ticket-booking-system
+```
