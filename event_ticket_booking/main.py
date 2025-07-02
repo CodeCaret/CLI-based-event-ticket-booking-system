@@ -1,6 +1,7 @@
 from event_ticket_booking.services.db_serivce import initialize_database
 
 from event_ticket_booking.services.user_service import UserService
+from event_ticket_booking.services.event_service import EventService
 
 from event_ticket_booking.utils import exceptions
 
@@ -11,9 +12,10 @@ from event_ticket_booking.utils import exceptions
 DB_FILE = 'booking.db'
 
 def database_connection():
-    global user_service, event, ticket
+    global user_service, event_service, ticket
     initialize_database(db_file=DB_FILE)
     user_service = UserService(db_file=DB_FILE)
+    event_service = EventService(db_file=DB_FILE)
 
     # user = UserQueries(db_file=DB_FILE)
     # event = EventQueries(db_file=DB_FILE)
@@ -47,6 +49,40 @@ def main():
     #     print(f"Error: {e}")
 
 
+    # try:
+    #     event_id = event_service.create_event('F1', 90, 'Monaco', '2025-07-12', 0)
+    #     print(event_id)
+    # except exceptions.BookingError as e:
+    #     print(f"Error: {e}")
+
+    # try:
+    #     event = event_service.get_one_event('HYDCOD0189')
+    #     print(event)
+    # except exceptions.EventDoesNotExistsError as e:
+    #     print(f"Error: {e}")
+
+    # events = event_service.get_events()
+    # if events:
+    #     print(events)
+    # else:
+    #     print("OOPs No event available")
+
+
+    # try:
+    #     if event_service.check_availability('MONF102'):
+    #         print("Seat is available")
+    #     else:
+    #         print("Seat is not available")
+    # except exceptions.EventDoesNotExistsError as e:
+    #     print(f"Error: {e}")
+
+
+
+    # try:
+    #     if event_service.delete('MONF102'):
+    #         print("Event deleted")
+    # except exceptions.EventDoesNotExistsError as e:
+    #     print(f"Error: {e}")
 
 
 

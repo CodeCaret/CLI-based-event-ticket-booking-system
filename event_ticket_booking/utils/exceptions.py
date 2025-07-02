@@ -14,3 +14,11 @@ class UserNotFoundError(BookingError):
 class IncorrectPasswordError(BookingError):
     def __init__(self, message = "Incorrect Password"):
         super().__init__(message)
+
+
+
+# EventEventDoesNot related errors
+
+class EventDoesNotExistsError(BookingError):
+    def __init__(self, message = "Event with this id doesn't exists"):
+        super().__init__(message)
