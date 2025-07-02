@@ -16,14 +16,14 @@ class EventQueries:
         return f"{location_prefix}{title_part}{id_part}"
 
 
-    def add_event(self, title, location, date_time, total_seats):
+    def add_event(self, title, event_price, location, date_time, total_seats):
         try:
             insert_query = """
-                INSERT INTO events (title, location, date_time, total_seats)
-                VALUES (?, ?, ?, ?);
+                INSERT INTO events (title, event_price, location, date_time, total_seats)
+                VALUES (?, ?, ?, ?, ?);
             """
 
-            self.cursor.execute(insert_query, (title, location, date_time, total_seats))
+            self.cursor.execute(insert_query, (title, event_price, location, date_time, total_seats))
             self.connection.commit()
 
             id = self.cursor.lastrowid
