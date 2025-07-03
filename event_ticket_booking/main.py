@@ -1,10 +1,10 @@
 from event_ticket_booking.services.db_serivce import initialize_database
-
 from event_ticket_booking.services.user_service import UserService
 from event_ticket_booking.services.event_service import EventService
 from event_ticket_booking.services.booking_service import BookingService
 
 from event_ticket_booking.utils import exceptions
+from event_ticket_booking.utils.animation import round_loading_animation, dot_loading_animation
 
 import os
 
@@ -38,33 +38,41 @@ def main_menu():
 
 
 def main():
+    print('\n\n')
+    round_loading_animation("Loading Event Booking Hub", 2)
     print("Welcome to Event Booking Hub🥰")
-    print("Establishing Connection With Database")
+    dot_loading_animation("Establishing Connection", 2)
+    print("Connection Established")
     database_connection()
     
-    # try:
-    #     while True:
-    #         choice = main_menu()
+    try:
+        while True:
+            choice = main_menu()
 
-    #         if choice == '1':
-    #             pass
-    #         elif choice == '2':
-    #             pass
-    #         elif choice == '3':
-    #             pass
-    #         elif choice == '4':
-    #             close_connection()
-    #             print("Closing Connection")
-    #             print("Thank you😏! Visit Again!!!")
-    #             break
+            if choice == '1':
+                pass
+            elif choice == '2':
+                pass
+            elif choice == '3':
+                pass
+            elif choice == '4':
+                close_connection()
+                dot_loading_animation("Closing Connection", 2)
+                print("Connection Closed")
+                round_loading_animation("Exiting Event Booking Hub", 2)
+                print("Thank you😏! Visit Again!!!")
+                break
 
-    #         else:
-    #             print("Invalid Choice")
+            else:
+                print("Invalid Choice")
 
-    # except KeyboardInterrupt:
-    #     close_connection()
-    #     print("Closing Connection")
-    #     print("Thank you😏! Visit Again!!!")
+    except KeyboardInterrupt:
+        print("Ctrl+c detected, Closing Gracefully!")
+        close_connection()
+        dot_loading_animation("Closing Connection", 2)
+        print("Connection Closed")
+        round_loading_animation("Exiting Event Booking Hub", 2)
+        print("Thank you😏! Visit Again!!!")
 
 
     # try:
