@@ -22,3 +22,8 @@ class IncorrectPasswordError(BookingError):
 class EventDoesNotExistsError(BookingError):
     def __init__(self, message = "Event with this id doesn't exists"):
         super().__init__(message)
+
+
+class TicketNotFoundError(BookingError):
+    def __init__(self, message = "Ticket with this id doesn't exists"):
+        super().__init__(message)
