@@ -1,0 +1,5 @@
+Ticket ID: HYDCOD01USRLEO0102
+User ID: USRLEO01
+Event ID: HYDCOD01
+Price: 90
+Booking Date & Time: 2025-07-03 13:05

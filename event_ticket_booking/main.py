@@ -2,19 +2,30 @@ from event_ticket_booking.services.db_serivce import initialize_database
 
 from event_ticket_booking.services.user_service import UserService
 from event_ticket_booking.services.event_service import EventService
+from event_ticket_booking.services.booking_service import BookingService
 
 from event_ticket_booking.utils import exceptions
 
+import os
+
 DB_FILE = 'booking.db'
 
+TICKET_DIR = 'event_ticket_booking/tickets'
+
+if not os.path.exists(TICKET_DIR):
+    os.makedirs(TICKET_DIR)
+
+
 def database_connection():
-    global user_service, event_service, ticket
+    global user_service, event_service, booking_service
     initialize_database(db_file=DB_FILE)
     user_service = UserService(db_file=DB_FILE)
     event_service = EventService(db_file=DB_FILE)
+    booking_service = BookingService(db_file=DB_FILE, tickect_dir=TICKET_DIR)
 
 def close_connection():
     event_service.close()
+    booking_service.close()
 
 def main_menu():
     print('\n')
@@ -31,29 +42,45 @@ def main():
     print("Establishing Connection With Database")
     database_connection()
     
-    try:
-        while True:
-            choice = main_menu()
+    # try:
+    #     while True:
+    #         choice = main_menu()
 
-            if choice == '1':
-                pass
-            elif choice == '2':
-                pass
-            elif choice == '3':
-                pass
-            elif choice == '4':
-                close_connection()
-                print("Closing Connection")
-                print("Thank you😏! Visit Again!!!")
-                break
+    #         if choice == '1':
+    #             pass
+    #         elif choice == '2':
+    #             pass
+    #         elif choice == '3':
+    #             pass
+    #         elif choice == '4':
+    #             close_connection()
+    #             print("Closing Connection")
+    #             print("Thank you😏! Visit Again!!!")
+    #             break
 
-            else:
-                print("Invalid Choice")
+    #         else:
+    #             print("Invalid Choice")
 
-    except KeyboardInterrupt:
-        close_connection()
-        print("Closing Connection")
-        print("Thank you😏! Visit Again!!!")
+    # except KeyboardInterrupt:
+    #     close_connection()
+    #     print("Closing Connection")
+    #     print("Thank you😏! Visit Again!!!")
+
+
+    # try:
+    #     ticket_id = booking_service.book_ticket('USRLEO01', 'HYDCOD01', 90)
+    #     print(ticket_id)
+    # except exceptions.BookingError as e:
+    #     print(f"Error: {e}")
+
+    # try:
+    #     if booking_service.cancel_ticket('HYDCOD01USRLEO0101'):
+    #         print("Ticket Cancelled")
+    # except exceptions.TicketNotFoundError as e:
+    #     print(f"Error: {e}")
+
+    # print(booking_service.ticket_list_by_event('HYDCOD01'))
+    # print(booking_service.ticket_list_by_user('USRLEO01'))
 
 
     # try:
