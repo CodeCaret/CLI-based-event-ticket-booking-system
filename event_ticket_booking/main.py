@@ -53,7 +53,7 @@ def manager_menu(user_data):
     print("4. Display Specific Event")
     print("5. Logout")
     choice = input("\nEnter your choice: ")
-    return choice
+    return choice, user_data[5]
 
 
 def user_menu(user_data):
@@ -67,7 +67,7 @@ def user_menu(user_data):
     print("6. Display All Ticket Information")
     print("7. Logout")
     choice = input("\nEnter your choice: ")
-    return choice
+    return choice, user_data[5]
 
 
 
@@ -121,11 +121,7 @@ def login():
     password = input("Enter Password: ")
     print('\n')
     try:
-        user = user_service.login_user(email=email, password=password)
-        if user_service.check_manager(email=email):
-            manager_menu(user)
-        elif user_service.check_user(email=email):
-            user_menu(user)
+        return user_service.login_user(email=email, password=password)
     except exceptions.UserNotFoundError as e:
         print(e)
     except exceptions.IncorrectPasswordError as e:
@@ -150,7 +146,51 @@ def main():
             elif choice == '2':
                 register_user()
             elif choice == '3':
-                login()
+                user = login()
+
+                if user_service.check_manager(email=user[2]):
+
+                    while True:
+                        manager_choice, manager_id = manager_menu(user)
+                        
+                        if choice == '1':
+                            pass
+                        elif choice == '2':
+                            pass
+                        elif choice == '3':
+                            pass
+                        elif choice == '4':
+                            pass
+                        elif choice == '5':
+                            print("Logged Out.")
+                            print("Visit Again!")
+                            break
+                        else:
+                            print("Invalid Choice")
+
+                elif user_service.check_user(email=user[2]):
+                    while True:
+                        user_choice, user_id = user_menu(user)
+
+                        if choice == '1':
+                            pass
+                        elif choice == '2':
+                            pass
+                        elif choice == '3':
+                            pass
+                        elif choice == '4':
+                            pass
+                        elif choice == '5':
+                            pass
+                        elif choice == '6':
+                            pass
+                        elif choice == '7':
+                            print("Logged Out.")
+                            print("Visit Again!")
+                            break
+                        else:
+                            print("Invalid Choice")
+
             elif choice == '4':
                 close_connection()
                 dot_loading_animation("Closing Connection", 1)
