@@ -53,3 +53,6 @@ class UserService:
     def check_user(self, email):
         user = self.get_user_by_email(email=email)
         return user[4] == 0
+    
+    def close(self):
+        self.user_queries.close_connection()
