@@ -7,6 +7,7 @@ from event_ticket_booking.utils import exceptions
 from event_ticket_booking.utils.animation import round_loading_animation, dot_loading_animation
 
 from valinix import validate_password, ValidationError
+from datetime import datetime
 
 import os
 
@@ -129,6 +130,46 @@ def login():
 
 
 
+def add_event():
+    title = input("Enter Event Title: ").title()
+    while True:
+        try:
+            event_price = int(input("Enter Event Price: "))
+            if event_price < 0:
+                print("Price should be positive value")
+            else:
+                break
+        except ValueError:
+            print("Price Should be number")
+
+    location = input("Enter Event Location: ")
+
+    while True:
+        try:
+            date_time = input("Enter Event Timings(YYYY-MM-DD HH:MM): ")
+            datetime.strptime(date_time, "%Y-%m-%d %H:%M")
+            break
+        except ValueError:
+            print("Follow correct date time format.")
+
+    while True:
+        try:
+            total_seats = int(input("Enter Total Number of  seats: "))
+            if total_seats < 0:
+                print("Seat Number should be positive value")
+            else:
+                break
+        except ValueError:
+            print("Seat Should be number")
+
+    try:
+        event_id = event_service.create_event(title=title, event_price=event_price, location=location, date_time=date_time, total_seats=total_seats)
+        print(f"Event Added Successfully")
+        print(f"Event Id: {event_id}")
+    except exceptions.BookingError as e:
+        print(f"Error: {e}")
+
+
 def main():
     print('\n\n')
     round_loading_animation("Loading Event Booking Hub", 1)
@@ -153,15 +194,15 @@ def main():
                     while True:
                         manager_choice, manager_id = manager_menu(user)
                         
-                        if choice == '1':
+                        if manager_choice == '1':
+                            add_event()
+                        elif manager_choice == '2':
                             pass
-                        elif choice == '2':
+                        elif manager_choice == '3':
                             pass
-                        elif choice == '3':
+                        elif manager_choice == '4':
                             pass
-                        elif choice == '4':
-                            pass
-                        elif choice == '5':
+                        elif manager_choice == '5':
                             print("Logged Out.")
                             print("Visit Again!")
                             break
@@ -172,19 +213,19 @@ def main():
                     while True:
                         user_choice, user_id = user_menu(user)
 
-                        if choice == '1':
+                        if user_choice == '1':
                             pass
-                        elif choice == '2':
+                        elif user_choice == '2':
                             pass
-                        elif choice == '3':
+                        elif user_choice == '3':
                             pass
-                        elif choice == '4':
+                        elif user_choice == '4':
                             pass
-                        elif choice == '5':
+                        elif user_choice == '5':
                             pass
-                        elif choice == '6':
+                        elif user_choice == '6':
                             pass
-                        elif choice == '7':
+                        elif user_choice == '7':
                             print("Logged Out.")
                             print("Visit Again!")
                             break
