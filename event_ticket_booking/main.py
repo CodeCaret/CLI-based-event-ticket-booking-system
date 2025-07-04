@@ -40,8 +40,36 @@ def main_menu():
     print("2. Register User")
     print("3. Login")
     print("4. Exit")
-    choice = input("Enter your choice: ")
+    choice = input("\nEnter your choice: ")
     return choice
+
+
+def manager_menu(user_data):
+    print('\n')
+    print(user_data)
+    print("1. Add Event")
+    print("2. Remove Event")
+    print("3. Display Events")
+    print("4. Display Specific Event")
+    print("5. Logout")
+    choice = input("\nEnter your choice: ")
+    return choice
+
+
+def user_menu(user_data):
+    print('\n')
+    print(user_data)
+    print("1. Book Ticket")
+    print("2. Cancel Ticket")
+    print("3. Display Events")
+    print("4. Display Specific Event")
+    print("5. Display Specific Ticket Information")
+    print("6. Display All Ticket Information")
+    print("7. Logout")
+    choice = input("\nEnter your choice: ")
+    return choice
+
+
 
 
 def register_manager():
@@ -88,6 +116,21 @@ def register_user():
         print("Password Does not match. Try Again!")
 
 
+def login():
+    email = input("Enter Your Email: ").lower()
+    password = input("Enter Password: ")
+    print('\n')
+    try:
+        user = user_service.login_user(email=email, password=password)
+        if user_service.check_manager(email=email):
+            manager_menu(user)
+        elif user_service.check_user(email=email):
+            user_menu(user)
+    except exceptions.UserNotFoundError as e:
+        print(e)
+    except exceptions.IncorrectPasswordError as e:
+        print(e)
+
 
 
 def main():
@@ -107,7 +150,7 @@ def main():
             elif choice == '2':
                 register_user()
             elif choice == '3':
-                pass
+                login()
             elif choice == '4':
                 close_connection()
                 dot_loading_animation("Closing Connection", 1)
