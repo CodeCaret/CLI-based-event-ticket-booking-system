@@ -6,7 +6,11 @@ from event_ticket_booking.services.booking_service import BookingService
 from event_ticket_booking.utils import exceptions
 from event_ticket_booking.utils.animation import round_loading_animation, dot_loading_animation
 
+from valinix import validate_password, ValidationError
+
 import os
+
+CEO_PASS = 'ceo@123'
 
 DB_FILE = 'booking.db'
 
@@ -24,8 +28,11 @@ def database_connection():
     booking_service = BookingService(db_file=DB_FILE, tickect_dir=TICKET_DIR)
 
 def close_connection():
+    user_service.close()
     event_service.close()
     booking_service.close()
+
+
 
 def main_menu():
     print('\n')
@@ -37,11 +44,57 @@ def main_menu():
     return choice
 
 
+def register_manager():
+    ceo_pass = input("Enter CEO Password: ")
+    if ceo_pass == CEO_PASS:
+        name = input("Enter Your Name: ").title()
+        email = input("Enter Your Email: ").lower()
+        password = input("Enter Password: ")
+        conf_password = input("Enter Password(again): ")
+        print("\n")
+        if password == conf_password:
+            try:
+                validate_password(password)
+                manager_id = user_service.register_manager(name=name, email=email, password=password)
+                print(f"Registration Successfull!")
+                print(f"Your Manager ID: {manager_id}")
+            except ValidationError as e:
+                print(f"{e}")
+            except exceptions.UserAlreadyExistsError as e:
+                print(f"Error: {e}")
+        else:
+            print("Password Does not match. Try Again!")
+    else:
+        print("Incorrect Password. Try Again!")
+
+
+def register_user():
+    name = input("Enter Your Name: ").title()
+    email = input("Enter Your Email: ").lower()
+    password = input("Enter Password: ")
+    conf_password = input("Enter Password(again): ")
+    print("\n")
+    if password == conf_password:
+        try:
+            validate_password(password)
+            user_id = user_service.register_user(name=name, email=email, password=password)
+            print(f"Registration Successfull!")
+            print(f"Your User ID: {user_id}")
+        except ValidationError as e:
+            print(f"{e}")
+        except exceptions.UserAlreadyExistsError as e:
+            print(f"Error: {e}")
+    else:
+        print("Password Does not match. Try Again!")
+
+
+
+
 def main():
     print('\n\n')
-    round_loading_animation("Loading Event Booking Hub", 2)
+    round_loading_animation("Loading Event Booking Hub", 1)
     print("Welcome to Event Booking Hub🥰")
-    dot_loading_animation("Establishing Connection", 2)
+    dot_loading_animation("Establishing Connection", 1)
     print("Connection Established")
     database_connection()
     
@@ -50,16 +103,16 @@ def main():
             choice = main_menu()
 
             if choice == '1':
-                pass
+                register_manager()
             elif choice == '2':
-                pass
+                register_user()
             elif choice == '3':
                 pass
             elif choice == '4':
                 close_connection()
-                dot_loading_animation("Closing Connection", 2)
+                dot_loading_animation("Closing Connection", 1)
                 print("Connection Closed")
-                round_loading_animation("Exiting Event Booking Hub", 2)
+                round_loading_animation("Exiting Event Booking Hub", 1)
                 print("Thank you😏! Visit Again!!!")
                 break
 
@@ -69,9 +122,9 @@ def main():
     except KeyboardInterrupt:
         print("Ctrl+c detected, Closing Gracefully!")
         close_connection()
-        dot_loading_animation("Closing Connection", 2)
+        dot_loading_animation("Closing Connection", 1)
         print("Connection Closed")
-        round_loading_animation("Exiting Event Booking Hub", 2)
+        round_loading_animation("Exiting Event Booking Hub", 1)
         print("Thank you😏! Visit Again!!!")
 
 
