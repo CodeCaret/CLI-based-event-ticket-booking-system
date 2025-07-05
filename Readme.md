@@ -26,9 +26,17 @@ It provides CLI for:
 
 ## Getting Started
 
-Clone the repo
+### 1. Clone the Repository
 ```
 //cmd
 git clone https://github.com/CodeCaret/CLI-based-event-ticket-booking-system.git
 cd CLI-based-event-ticket-booking-system
+```
+
+### 2. Create & Activate a Virtual Environment
+
+```
+//cmd
+python -m venv env
+env\Scripts\activate     # On MacOS use: source env/bin/activate
 ```
