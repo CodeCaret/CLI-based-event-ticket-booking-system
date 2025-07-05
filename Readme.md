@@ -40,3 +40,10 @@ cd CLI-based-event-ticket-booking-system
 python -m venv env
 env\Scripts\activate     # On MacOS use: source env/bin/activate
 ```
+
+### 3. Install Dependencies
+
+```
+//cmd
+pip install -r requirements.txt
+```
