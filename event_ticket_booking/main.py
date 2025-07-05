@@ -186,10 +186,24 @@ def display_events():
         print("OOPs! No Events scheduled as of now")
         return
     
+    print('\n')
     print("EVENT ID\tEVENT TITLE\tPRICE\tLOCATION\tSHOW TIME\tAVAILABLE SEATS")
     print("--------------------------------------------------------------------------")
     for event in events:
         print(f"{event[6]}\t{event[1]}\t{event[2]}\t{event[3]}\t{event[4]}\t{event[5]}")
+
+
+def display_specific_event():
+    try:
+        event_id = input("Enter event ID: ").upper()
+        event = event_service.get_one_event(event_id=event_id)
+        print('\n')
+        print("EVENT ID\tEVENT TITLE\tPRICE\tLOCATION\tSHOW TIME\tAVAILABLE SEATS")
+        print("--------------------------------------------------------------------------")
+        print(f"{event[6]}\t{event[1]}\t{event[2]}\t{event[3]}\t{event[4]}\t{event[5]}")
+
+    except exceptions.EventDoesNotExistsError as e:
+        print(f"Error: {e}")
 
 
 def main():
@@ -223,7 +237,7 @@ def main():
                         elif manager_choice == '3':
                             display_events()
                         elif manager_choice == '4':
-                            pass
+                            display_specific_event()
                         elif manager_choice == '5':
                             print("Logged Out.")
                             print("Visit Again!")
@@ -242,7 +256,7 @@ def main():
                         elif user_choice == '3':
                             display_events()
                         elif user_choice == '4':
-                            pass
+                            display_specific_event()
                         elif user_choice == '5':
                             pass
                         elif user_choice == '6':
