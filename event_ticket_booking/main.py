@@ -170,6 +170,15 @@ def add_event():
         print(f"Error: {e}")
 
 
+def remove_event():
+    try:
+        event_id = input("Enter event ID: ").upper()
+        event_service.delete(event_id=event_id)
+        print(f"Event with ID: '{event_id}' removed successfully!")
+    except exceptions.EventDoesNotExistsError as e:
+        print(f"Error: {e}")
+
+
 def main():
     print('\n\n')
     round_loading_animation("Loading Event Booking Hub", 1)
@@ -197,7 +206,7 @@ def main():
                         if manager_choice == '1':
                             add_event()
                         elif manager_choice == '2':
-                            pass
+                            remove_event()
                         elif manager_choice == '3':
                             pass
                         elif manager_choice == '4':
