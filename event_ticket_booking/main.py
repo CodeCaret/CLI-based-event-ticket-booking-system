@@ -45,7 +45,7 @@ def main_menu():
     return choice
 
 
-def manager_menu(user_data):
+def manager_menu():
     print('\n')
     print("1. Add Event")
     print("2. Remove Event")
@@ -53,10 +53,10 @@ def manager_menu(user_data):
     print("4. Display Specific Event")
     print("5. Logout")
     choice = input("\nEnter your choice: ")
-    return choice, user_data[5]
+    return choice
 
 
-def user_menu(user_data):
+def user_menu():
     print('\n')
     print("1. Book Ticket")
     print("2. Cancel Ticket")
@@ -66,7 +66,7 @@ def user_menu(user_data):
     print("6. Display All Ticket Information")
     print("7. Logout")
     choice = input("\nEnter your choice: ")
-    return choice, user_data[5]
+    return choice
 
 
 
@@ -265,7 +265,8 @@ def main():
                 if user_service.check_manager(email=user[2]):
 
                     while True:
-                        manager_choice, manager_id = manager_menu(user)
+                        manager_choice = manager_menu()
+                        manager_data = user
                         
                         if manager_choice == '1':
                             add_event()
@@ -284,7 +285,8 @@ def main():
 
                 elif user_service.check_user(email=user[2]):
                     while True:
-                        user_choice, user_id = user_menu(user)
+                        user_choice = user_menu()
+                        user_data = user
 
                         if user_choice == '1':
                             book_ticket(user_id=user_id)
