@@ -179,6 +179,19 @@ def remove_event():
         print(f"Error: {e}")
 
 
+def display_events():
+    events = event_service.get_events()
+
+    if not events:
+        print("OOPs! No Events scheduled as of now")
+        return
+    
+    print("EVENT ID\tEVENT TITLE\tPRICE\tLOCATION\tSHOW TIME\tAVAILABLE SEATS")
+    print("--------------------------------------------------------------------------")
+    for event in events:
+        print(f"{event[6]}\t{event[1]}\t{event[2]}\t{event[3]}\t{event[4]}\t{event[5]}")
+
+
 def main():
     print('\n\n')
     round_loading_animation("Loading Event Booking Hub", 1)
@@ -208,7 +221,7 @@ def main():
                         elif manager_choice == '2':
                             remove_event()
                         elif manager_choice == '3':
-                            pass
+                            display_events()
                         elif manager_choice == '4':
                             pass
                         elif manager_choice == '5':
@@ -227,7 +240,7 @@ def main():
                         elif user_choice == '2':
                             pass
                         elif user_choice == '3':
-                            pass
+                            display_events()
                         elif user_choice == '4':
                             pass
                         elif user_choice == '5':
