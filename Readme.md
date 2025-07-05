@@ -47,3 +47,10 @@ env\Scripts\activate     # On MacOS use: source env/bin/activate
 //cmd
 pip install -r requirements.txt
 ```
+
+### 4. Run the project
+
+```
+//cmd
+python -m event_ticket_booking		#or use batch file to run
+```
