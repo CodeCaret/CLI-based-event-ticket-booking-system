@@ -207,6 +207,42 @@ def display_specific_event():
         print(f"Error: {e}")
 
 
+def payment(ticket_amount):
+    amount = float(input("Enter the amount to do the payment: "))
+    if amount == ticket_amount:
+        return True
+    else:
+        return False
+
+
+def book_ticket(user_id):
+    try:
+        event_id = input("Enter event ID: ").upper()
+        event = event_service.get_one_event(event_id=event_id)
+        if event_service.check_availability(event_id=event_id):
+            print(f"Price of the '{event[1]}' event is Rs.{event[2]}")
+            if payment(ticket_amount=event[2]):
+                ticket_id = booking_service.book_ticket(user_id=user_id, event_id=event_id, price=event[2])
+                ticket = booking_service.get_one_ticket(ticket_id=ticket_id)
+                booking_service.generate_ticket_file(ticket_id=ticket_id, user_id=user_id, username=user_id, event_id=event_id, event_name=event[1], event_location=event[3], price=event[2], booking_time=ticket[4])
+                print("Ticket Booked Successfully!🥰")
+                print(f"Enjoy '{event[1]}' Show")
+            else:
+                print("Payment Failed!")
+                print("Try Again.")
+        else:
+            print("Ticket Not Available")
+            print("Go for another event")
+
+    except exceptions.EventDoesNotExistsError as e:
+        print(f"Error: {e}")
+    except exceptions.BookingError as e:
+        print(f"Error: {e}")
+    except exceptions.TicketNotFoundError as e:
+        print(f"Error: {e}")
+
+
+
 def main():
     print('\n\n')
     round_loading_animation("Loading Event Booking Hub", 1)
@@ -251,7 +287,7 @@ def main():
                         user_choice, user_id = user_menu(user)
 
                         if user_choice == '1':
-                            pass
+                            book_ticket(user_id=user_id)
                         elif user_choice == '2':
                             pass
                         elif user_choice == '3':
