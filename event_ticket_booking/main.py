@@ -215,16 +215,16 @@ def payment(ticket_amount):
         return False
 
 
-def book_ticket(user_id):
+def book_ticket(user_data):
     try:
         event_id = input("Enter event ID: ").upper()
         event = event_service.get_one_event(event_id=event_id)
         if event_service.check_availability(event_id=event_id):
             print(f"Price of the '{event[1]}' event is Rs.{event[2]}")
             if payment(ticket_amount=event[2]):
-                ticket_id = booking_service.book_ticket(user_id=user_id, event_id=event_id, price=event[2])
+                ticket_id = booking_service.book_ticket(user_id=user_data[5], event_id=event_id, price=event[2])
                 ticket = booking_service.get_one_ticket(ticket_id=ticket_id)
-                booking_service.generate_ticket_file(ticket_id=ticket_id, user_id=user_id, username=user_id, event_id=event_id, event_name=event[1], event_location=event[3], price=event[2], booking_time=ticket[4])
+                booking_service.generate_ticket_file(ticket_id=ticket_id, user_id=user_data[5], username=user_data[1], event_id=event_id, event_name=event[1], event_location=event[3], price=event[2], booking_time=ticket[4])
                 print("Ticket Booked Successfully!🥰")
                 print(f"Enjoy '{event[1]}' Show")
             else:
@@ -289,7 +289,7 @@ def main():
                         user_data = user
 
                         if user_choice == '1':
-                            book_ticket(user_id=user_id)
+                            book_ticket(user_data = user_data)
                         elif user_choice == '2':
                             pass
                         elif user_choice == '3':
