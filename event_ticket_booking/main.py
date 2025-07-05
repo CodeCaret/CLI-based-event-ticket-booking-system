@@ -47,7 +47,6 @@ def main_menu():
 
 def manager_menu(user_data):
     print('\n')
-    print(user_data)
     print("1. Add Event")
     print("2. Remove Event")
     print("3. Display Events")
@@ -59,7 +58,6 @@ def manager_menu(user_data):
 
 def user_menu(user_data):
     print('\n')
-    print(user_data)
     print("1. Book Ticket")
     print("2. Cancel Ticket")
     print("3. Display Events")
@@ -122,7 +120,10 @@ def login():
     password = input("Enter Password: ")
     print('\n')
     try:
-        return user_service.login_user(email=email, password=password)
+        user = user_service.login_user(email=email, password=password)
+        print('\n')
+        print(f"Welcome {user[1]}")
+        return user
     except exceptions.UserNotFoundError as e:
         print(e)
     except exceptions.IncorrectPasswordError as e:
