@@ -199,9 +199,23 @@ def display_specific_event():
         event_id = input("Enter event ID: ").upper()
         event = event_service.get_one_event(event_id=event_id)
         print('\n')
-        print("EVENT ID\tEVENT TITLE\tPRICE\tLOCATION\tSHOW TIME\tAVAILABLE SEATS")
-        print("--------------------------------------------------------------------------")
-        print(f"{event[6]}\t{event[1]}\t{event[2]}\t{event[3]}\t{event[4]}\t{event[5]}")
+
+        headers = ["EVENT ID", "EVENT TITLE", "PRICE", "LOCATION", "SHOW TIME", "AVAILABLE SEATS"]
+        col_widths = [12, 20, 8, 15, 15, 18]
+
+        row_format = f"{{:<{col_widths[0]}}}{{:<{col_widths[1]}}}{{:<{col_widths[2]}}}{{:<{col_widths[3]}}}{{:<{col_widths[4]}}}{{:<{col_widths[5]}}}"
+
+        print(row_format.format(*headers))
+        print("-" * sum(col_widths))
+
+        event_id = event[6]
+        title = event[1]
+        price = f"{event[2]:.2f}"
+        location = event[3]
+        show_time = event[4]
+        seats = str(event[5])
+
+        print(row_format.format(event_id, title, price, location, show_time, seats))
 
     except exceptions.EventDoesNotExistsError as e:
         print(f"Error: {e}")
@@ -268,12 +282,23 @@ def display_tickets(user_id):
     if not tickets:
         print("OOPs! No Tickets Booked")
         return
-    
-    print('\n')
-    print("TICKET ID\tEVENT ID\tPRICE\tBOOKING TIME")
-    print("---------------------------------------------------------")
+
+    print("\n")
+
+    headers = ["TICKET ID", "EVENT ID", "PRICE", "BOOKING TIME"]
+    col_widths = [22, 12, 8, 20]
+
+    row_format = f"{{:<{col_widths[0]}}}{{:<{col_widths[1]}}}{{:<{col_widths[2]}}}{{:<{col_widths[3]}}}"
+
+    print(row_format.format(*headers))
+    print("-" * sum(col_widths))
+
     for ticket in tickets:
-        print(f"{ticket[5]}\t{ticket[2]}\t{ticket[3]}\t{ticket[4]}")
+        ticket_id = ticket[5]
+        event_id = ticket[2]
+        price = f"{ticket[3]:.2f}"
+        booking_time = ticket[4]
+        print(row_format.format(ticket_id, event_id, price, booking_time))
 
 
 
