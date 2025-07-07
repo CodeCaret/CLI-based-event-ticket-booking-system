@@ -262,6 +262,21 @@ def display_specific_ticket():
         print(f"Error: {e}")
 
 
+def display_tickets(user_id):
+    tickets = booking_service.ticket_list_by_user(user_id=user_id)
+
+    if not tickets:
+        print("OOPs! No Tickets Booked")
+        return
+    
+    print('\n')
+    print("TICKET ID\tEVENT ID\tPRICE\tBOOKING TIME")
+    print("---------------------------------------------------------")
+    for ticket in tickets:
+        print(f"{ticket[5]}\t{ticket[2]}\t{ticket[3]}\t{ticket[4]}")
+
+
+
 def main():
     print('\n\n')
     round_loading_animation("Loading Event Booking Hub", 1)
@@ -318,7 +333,7 @@ def main():
                         elif user_choice == '5':
                             display_specific_ticket()
                         elif user_choice == '6':
-                            pass
+                            display_tickets(user_id=user_data[5])
                         elif user_choice == '7':
                             print("Logged Out.")
                             print("Visit Again!")
