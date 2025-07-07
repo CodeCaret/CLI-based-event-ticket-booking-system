@@ -62,5 +62,13 @@ class BookingService:
         return self.ticket_queries.get_all_ticket_by_user(user_id=user_id)
 
 
+    def get_one_ticket_information(self, ticket_id):
+        if self.get_one_ticket(ticket_id=ticket_id):
+            ticket_file = f"{self.tickect_dir}/ticket_{ticket_id}.txt"
+            with open(ticket_file, 'r') as file:
+                loaded_info = file.read()
+            return loaded_info
+
+
     def close(self):
         self.ticket_queries.close_connection()
