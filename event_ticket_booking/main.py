@@ -242,6 +242,14 @@ def book_ticket(user_data):
         print(f"Error: {e}")
 
 
+def cancel_ticket():
+    try:
+        ticket_id = input("Enter Ticket ID: ")
+        if booking_service.cancel_ticket(ticket_id=ticket_id):
+            print(f"Ticket with ID: {ticket_id} Cancelled")
+    except exceptions.TicketNotFoundError as e:
+        print(f"Error: {e}")
+
 
 def main():
     print('\n\n')
@@ -291,7 +299,7 @@ def main():
                         if user_choice == '1':
                             book_ticket(user_data = user_data)
                         elif user_choice == '2':
-                            pass
+                            cancel_ticket()
                         elif user_choice == '3':
                             display_events()
                         elif user_choice == '4':
