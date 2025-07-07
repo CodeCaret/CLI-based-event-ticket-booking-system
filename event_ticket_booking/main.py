@@ -251,6 +251,17 @@ def cancel_ticket():
         print(f"Error: {e}")
 
 
+def display_specific_ticket():
+    try:
+        ticket_id = input("Enter Ticket ID: ")
+        ticket_info = booking_service.get_one_ticket_information(ticket_id=ticket_id)
+        print(f"\nBelow is your Ticket Information")
+        print('--------------------------------------')
+        print(ticket_info)
+    except exceptions.TicketNotFoundError as e:
+        print(f"Error: {e}")
+
+
 def main():
     print('\n\n')
     round_loading_animation("Loading Event Booking Hub", 1)
@@ -305,7 +316,7 @@ def main():
                         elif user_choice == '4':
                             display_specific_event()
                         elif user_choice == '5':
-                            pass
+                            display_specific_ticket()
                         elif user_choice == '6':
                             pass
                         elif user_choice == '7':
