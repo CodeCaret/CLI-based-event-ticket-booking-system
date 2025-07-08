@@ -7,6 +7,7 @@ from event_ticket_booking.utils.exceptions import (UserAlreadyExistsError,
                                                 UserNotFoundError,
                                                 IncorrectPasswordError)
 
+import bcrypt
 
 class UserService:
 
@@ -14,9 +15,14 @@ class UserService:
         self.db_file = db_file
         self.user_queries = UserQueries(self.db_file)
 
+    @staticmethod
+    def hash_password(password):
+        return bcrypt.hashpw(password=password.encode('utf-8'), salt=bcrypt.gensalt())
+
     def register_manager(self, name, email, password):
         manager = Manager(name, email, password)
-        manager_id = self.user_queries.add_user(name=manager.name, email=manager.email, password=manager.password, is_admin=manager.is_admin)
+        hashed_password = self.hash_password(password=manager.password)
+        manager_id = self.user_queries.add_user(name=manager.name, email=manager.email, password=hashed_password, is_admin=manager.is_admin)
         if manager_id:
             return manager_id
         else:
@@ -24,7 +30,8 @@ class UserService:
 
     def register_user(self, name, email, password):
         user = User(name, email, password)
-        user_id = self.user_queries.add_user(name=user.name, email=user.email, password=user.password, is_admin=user.is_admin)
+        hashed_password = self.hash_password(password=user.password)
+        user_id = self.user_queries.add_user(name=user.name, email=user.email, password=hashed_password, is_admin=user.is_admin)
         if user_id:
             return user_id
         else:
@@ -33,7 +40,7 @@ class UserService:
 
     def login_user(self, email, password):
         user = self.get_user_by_email(email=email)
-        if password == user[3]:
+        if bcrypt.checkpw(password=password.encode('utf-8'), hashed_password=user[3]):
             return user
         else:
             raise IncorrectPasswordError
