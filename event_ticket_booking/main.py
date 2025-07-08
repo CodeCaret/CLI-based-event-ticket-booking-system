@@ -187,11 +187,28 @@ def display_events():
         print("OOPs! No Events scheduled as of now")
         return
     
-    print('\n')
-    print("EVENT ID\tEVENT TITLE\tPRICE\tLOCATION\tSHOW TIME\tAVAILABLE SEATS")
-    print("--------------------------------------------------------------------------")
+    headers = ["EVENT ID", "EVENT TITLE", "PRICE", "LOCATION", "SHOW TIME", "AVAILABLE SEATS"]
+
+    col_widths = [max(len(header), max(len(str(event[i])) for event in events)) for i, header in enumerate(headers)]
+
+    col_widths = [width + 2 for width in col_widths]
+
+    row_format = "".join([f"{{:<{col_width}}}" for col_width in col_widths])
+
+    print("\n")
+    print(row_format.format(*headers))
+    print("-" * sum(col_widths))
+
     for event in events:
-        print(f"{event[6]}\t{event[1]}\t{event[2]}\t{event[3]}\t{event[4]}\t{event[5]}")
+        event_id = str(event[6])
+        event_title = str(event[1])
+        price = f"{event[2]:.2f}"
+        location = str(event[3])
+        show_time = str(event[4])
+        available_seats = str(event[5]) if event[5] else "Sold Out!"
+        
+        print(row_format.format(event_id, event_title, price, location, show_time, available_seats))
+
 
 
 def display_specific_event():
@@ -213,7 +230,7 @@ def display_specific_event():
         price = f"{event[2]:.2f}"
         location = event[3]
         show_time = event[4]
-        seats = str(event[5])
+        seats = str(event[5]) if event[5] else "Sold Out!"
 
         print(row_format.format(event_id, title, price, location, show_time, seats))
 
