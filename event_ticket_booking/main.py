@@ -337,51 +337,51 @@ def main():
                 register_user()
             elif choice == '3':
                 user = login()
+                if user:
+                    if user_service.check_manager(email=user[2]):
 
-                if user_service.check_manager(email=user[2]):
+                        while True:
+                            manager_choice = manager_menu()
+                            manager_data = user
+                            
+                            if manager_choice == '1':
+                                add_event()
+                            elif manager_choice == '2':
+                                remove_event()
+                            elif manager_choice == '3':
+                                display_events()
+                            elif manager_choice == '4':
+                                display_specific_event()
+                            elif manager_choice == '5':
+                                print("Logged Out.")
+                                print("Visit Again!")
+                                break
+                            else:
+                                print("Invalid Choice")
 
-                    while True:
-                        manager_choice = manager_menu()
-                        manager_data = user
-                        
-                        if manager_choice == '1':
-                            add_event()
-                        elif manager_choice == '2':
-                            remove_event()
-                        elif manager_choice == '3':
-                            display_events()
-                        elif manager_choice == '4':
-                            display_specific_event()
-                        elif manager_choice == '5':
-                            print("Logged Out.")
-                            print("Visit Again!")
-                            break
-                        else:
-                            print("Invalid Choice")
+                    elif user_service.check_user(email=user[2]):
+                        while True:
+                            user_choice = user_menu()
+                            user_data = user
 
-                elif user_service.check_user(email=user[2]):
-                    while True:
-                        user_choice = user_menu()
-                        user_data = user
-
-                        if user_choice == '1':
-                            book_ticket(user_data = user_data)
-                        elif user_choice == '2':
-                            cancel_ticket()
-                        elif user_choice == '3':
-                            display_events()
-                        elif user_choice == '4':
-                            display_specific_event()
-                        elif user_choice == '5':
-                            display_specific_ticket()
-                        elif user_choice == '6':
-                            display_tickets(user_id=user_data[5])
-                        elif user_choice == '7':
-                            print("Logged Out.")
-                            print("Visit Again!")
-                            break
-                        else:
-                            print("Invalid Choice")
+                            if user_choice == '1':
+                                book_ticket(user_data = user_data)
+                            elif user_choice == '2':
+                                cancel_ticket()
+                            elif user_choice == '3':
+                                display_events()
+                            elif user_choice == '4':
+                                display_specific_event()
+                            elif user_choice == '5':
+                                display_specific_ticket()
+                            elif user_choice == '6':
+                                display_tickets(user_id=user_data[5])
+                            elif user_choice == '7':
+                                print("Logged Out.")
+                                print("Visit Again!")
+                                break
+                            else:
+                                print("Invalid Choice")
 
             elif choice == '4':
                 close_connection()
